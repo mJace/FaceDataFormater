@@ -1,15 +1,42 @@
-<!DOCTYPE html>
 <html>
+
 <head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <script type="text/javascript">
 
-  <base target="_blank">
+        function readTextFile(file) {
+            var rawFile = new XMLHttpRequest();
+            var allText;
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4) {
+                    if (rawFile.status === 200 || rawFile.status == 0) {
+                        allText = rawFile.responseText;
 
-  <title>ITRI-FaceDemo Client web UI</title>
+                    }
+                }
+            }
+            rawFile.send(null);
+            // document.write(allText);
+            return allText
+            
+        }
 
+        var test = readTextFile("faceData.csv");
+        // readTextFile("faceData.csv");
+        document.write(test);
+        var res = test.split(" ");
+        document.write(res[0]);
+        document.write(res[1]);
+
+
+
+
+    </script>
+
+    <body>
+
+    </body>
 </head>
 
-<body>
-
-
-</body>
 </html>
