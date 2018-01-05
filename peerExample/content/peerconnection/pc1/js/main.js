@@ -93,7 +93,7 @@ function call() {
     trace('Using audio device: ' + audioTracks[0].label);
   }
   var servers = null;
-  var servers2 = {iceServers: [{urls: "stun:127.0.0.1"}]};
+  var servers2 = {iceServers: [{urls: "stun:140.96.27.232"}]};
   pc1 = new RTCPeerConnection(servers);
   trace('Created local peer connection object pc1');
   pc1.onicecandidate = function(e) {
