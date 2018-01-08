@@ -1,8 +1,17 @@
+<meta charset="utf-8" />
+
 <html>
 
 <head>
+
+</head>
+
+<body>
+    <div class="js-gauge js-gauge--1 gauge"></div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script type="text/javascript" src="js/kuma-gauge.jquery.js"></script>
+    <script>
 
         function readTextFile(file) {
             var rawFile = new XMLHttpRequest();
@@ -19,24 +28,44 @@
             rawFile.send(null);
             // document.write(allText);
             return allText
-            
+
         }
 
         var test = readTextFile("faceData.csv");
         // readTextFile("faceData.csv");
-        document.write(test);
+        document.write(test + '<br>');
         var res = test.split(" ");
-        document.write(res[0]);
-        document.write(res[1]);
+        var face = res[0].split(':')[1];
+        var happySum = res[1].split(':')[1];
+        var totalHappy = res[3].split(':')[1];
+        document.write(face + '<br>');
+        document.write(happySum + '<br>');
+        document.write(totalHappy + '<br>');
 
+        $('.js-gauge--1').kumaGauge({
+            // value: Math.floor((Math.random() * 99) + 1)
+            value: Math.round((happySum/face)*100)
+        });
 
+        // $('.js-gauge--1').kumaGauge('update', {
+        //     value: Math.floor((Math.random() * 99) + 1)
+        // });
+
+        var update = setInterval(function () {
+            var newVal = Math.floor((Math.random() * 99) + 1);
+            $('.js-gauge--1').kumaGauge('update', {
+                value: Math.round((happySum/face)*100)
+            });
+        }, 1000);
 
 
     </script>
 
-    <body>
+</body>
 
-    </body>
-</head>
+
+
+
+</script>
 
 </html>
