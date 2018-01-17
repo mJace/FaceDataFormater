@@ -17,7 +17,7 @@
 
         // fill : '0-#1cb42f:0-#fdbe37:50-#fa4133:100',
         fill : '0-#fa4133:0-#fdbe37:50-#1cb42f:100',
-        gaugeBackground : '#f4f4f4',
+        gaugeBackground : '#3A3B4E',
         background : '#3A3B4E',
 
         showNeedle : true,
@@ -176,14 +176,14 @@
             _this.gauge.centerArc.node.setAttribute('class', 'gauge__center');
 
             // Draw the needle
-            if (_this.config.showNeedle) {
-                _this.gauge.needle = _this.gauge.rect(_this.config.centerX, _this.config.paddingY, 1, 40);
-                _this.gauge.needle.attr({
-                    'fill' : '#000',
-                    'stroke' : 'none'
-                });
-                _this.gauge.needle.node.setAttribute('class', 'gauge__needle');
-            }
+            // if (_this.config.showNeedle) {
+            //     _this.gauge.needle = _this.gauge.rect(_this.config.centerX, _this.config.paddingY, 1, 40);
+            //     _this.gauge.needle.attr({
+            //         'fill' : '#000',
+            //         'stroke' : 'none'
+            //     });
+            //     _this.gauge.needle.node.setAttribute('class', 'gauge__needle');
+            // }
 
             // Draw the bottom mask to hide the rotated background arc
             _this.gauge.bottomMask = _this.gauge.rect(0, _this.config.centerY, _this.config.width, 40);

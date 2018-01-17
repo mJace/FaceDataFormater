@@ -247,8 +247,8 @@
 
           <!-- base_immediate data (動態面板) -->
 
-          <div id="u31" class="ax_default" data-label="base_immediate data">
-            <div id="u31_state0" class="panel_state" data-label="State1" style="height:600px">
+          <div id="u31" class="ax_default" data-label="base_immediate data" style="margin:150px 0px 0px 0px">
+            <div id="u31_state0" class="panel_state" data-label="State1">
               <div id="u31_state0_content" class="panel_state_content">
 
                 <!-- base_immediate data (矩形) -->
@@ -279,6 +279,7 @@
                       }
 
                       var test = readTextFile("faceData.csv");
+                      
                       var res = test.split(" ");
                       var face = res[0].split(':')[1];
                       var happySum = res[1].split(':')[1];
@@ -298,7 +299,8 @@
 
                         var newVal = Math.floor((Math.random() * 99) + 1);
                         $('.js-gauge--1').kumaGauge('update', {
-                          value: Math.round((happySum / face) * 100)
+                          // value: Math.round((happySum / face) * 100)
+                          value: Math.floor((Math.random() * 99) + 1)
                         });
                       }, 1000);
                       var str = "開心率"
@@ -364,7 +366,7 @@
             <!-- Unnamed () -->
             <div id="u167" class="text">
               <p>
-                <span>Life vedio</span>
+                <span>Live vedio</span>
               </p>
             </div>
           </div>
