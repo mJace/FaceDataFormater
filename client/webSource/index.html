@@ -21,9 +21,125 @@
     $axure.utils.getOtherPath = function () { return 'resources/Other.html'; };
     $axure.utils.getReloadPath = function () { return 'resources/reload.html'; };
   </script>
+
+  <style>
+    #myImg {
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #myImg:hover {
+      opacity: 0.7;
+    }
+
+    /* The Modal (background) */
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.9);
+      /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+
+    /* Caption of Modal Image */
+
+    #caption {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      text-align: center;
+      color: #ccc;
+      padding: 10px 0;
+      height: 150px;
+    }
+
+    /* Add Animation */
+
+    .modal-content,
+    #caption {
+      -webkit-animation-name: zoom;
+      -webkit-animation-duration: 0.6s;
+      animation-name: zoom;
+      animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+      from {
+        -webkit-transform: scale(0)
+      }
+      to {
+        -webkit-transform: scale(1)
+      }
+    }
+
+    @keyframes zoom {
+      from {
+        transform: scale(0)
+      }
+      to {
+        transform: scale(1)
+      }
+    }
+
+    /* The Close Button */
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* 100% Image Width on Smaller Screens */
+
+    @media only screen and (max-width: 700px) {
+      .modal-content {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
+
+
   <div id="base" class="">
 
     <!-- sampe_base (動態面板) -->
@@ -258,6 +374,14 @@
                     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
                     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
                     <script type="text/javascript" src="js/kuma-gauge.jquery.js"></script>
+                    <img id="myImg">
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                      <span class="close">&times;</span>
+                      <img class="modal-content" id="img01">
+                      <div id="caption"></div>
+                    </div>
                     <script>
 
                       function readTextFile(file) {
@@ -278,36 +402,115 @@
 
                       }
 
-                      var test = readTextFile("faceData.csv");
-                      
+                      var test = readTextFile("faceData.txt");
+                      // document.write(test);
+
                       var res = test.split(" ");
+                      var res = res[0].split("\n");
                       var face = res[0].split(':')[1];
                       var happySum = res[1].split(':')[1];
                       var totalHappy = res[3].split(':')[1];
 
                       $('.js-gauge--1').kumaGauge({
                         // value: Math.floor((Math.random() * 99) + 1)
-                        value: Math.round((happySum / face) * 100)
+                        // value: Math.round((happySum / face) * 100)
                       });
+                      var max = 3;
+                      var flag = 0;
+
 
                       var update = setInterval(function () {
-                        var test = readTextFile("faceData.csv");
+                        var test = readTextFile("faceData.txt");
                         var res = test.split(" ");
+                        var res = res[0].split("\n");
                         var face = res[0].split(':')[1];
                         var happySum = res[1].split(':')[1];
                         var totalHappy = res[3].split(':')[1];
+                        var happyRate;
+                        happyRate = Math.round((happySum / face) * 100)
+                        // happyRate = Math.floor((Math.random() * 99) + 1);
 
-                        var newVal = Math.floor((Math.random() * 99) + 1);
                         $('.js-gauge--1').kumaGauge('update', {
                           // value: Math.round((happySum / face) * 100)
-                          value: Math.floor((Math.random() * 99) + 1)
+                          value: happyRate
                         });
+                        if (happyRate >= 90 && flag < max) {
+                          flag = flag + 1;
+                          modal.style.display = "block";
+                          modalImg.src = "yeah.gif";
+                        }
+
+
                       }, 1000);
                       var str = "開心率"
-                      // document.write("<p>Fontcolor: " + txt.fontcolor("green") + "</p>");
-                      document.write(str.fontsize(6).fontcolor("#fff"));
+                      document.write(str.fontsize(5).fontcolor("#fff"));
+
+                      var str2 = "開心能量"
+                      document.write("<br>");
+                      document.write("<br>");
+                      document.write(str2.fontsize(6).fontcolor("#fff"));
+                      document.write("<br>");
+                      document.write("<br>");
+                    </script>
+                    <div id="value" style="font-size:30px; color:red;">0</div>
+
+                    <script>
 
 
+                      function animateValue(id, start, end, duration) {
+                        var range = end - start;
+                        var current = start;
+                        var increment = end > start ? 1 : -1;
+                        var stepTime = Math.abs(Math.floor(duration / range));
+                        var obj = document.getElementById(id);
+                        var timer = setInterval(function () {
+                          current += increment;
+                          obj.innerHTML = current;
+                          if (current == end) {
+                            clearInterval(timer);
+                          }
+                        }, stepTime);
+                      }
+                      var firstRun = 1;
+                      var oldTotalHappy = 0;
+
+                      var update = setInterval(function () {
+                        var test = readTextFile("faceData.txt");
+                        var res = test.split(" ");
+                        var res = res[0].split("\n");
+                        var totalHappy = res[3].split(':')[1];
+                        if (firstRun == 1) {
+                          animateValue("value", 0, totalHappy, 2000);
+                          firstRun = 0;
+                          oldTotalHappy = totalHappy;
+                        }else if( totalHappy == oldTotalHappy ){
+
+                        } else {
+                          animateValue("value", oldTotalHappy, totalHappy, 2000);
+                          oldTotalHappy = totalHappy;
+                        }
+
+                        // animateValue("value", 25, 999, 500);
+                      }, 1000);
+
+                      // animateValue("value", 25, 999, 500);
+
+
+                      // Get the modal
+                      var modal = document.getElementById('myModal');
+
+                      // Get the image and insert it inside the modal - use its "alt" text as a caption
+                      var img = document.getElementById('myImg');
+                      var modalImg = document.getElementById("img01");
+                      var captionText = document.getElementById("caption");
+                      var span = document.getElementsByClassName("close")[0];
+
+                      // When the user clicks on <span> (x), close the modal
+                      span.onclick = function () {
+                        modal.style.display = "none";
+                      }
+                      // modal.style.display = "block";
+                      // modalImg.src = "img_fjords.gif";
                     </script>
 
 
@@ -329,45 +532,7 @@
                     </p>
                   </div>
                 </div>
-
-
               </div>
-            </div>
-          </div>
-
-
-          <!-- vedio_area (動態面板) -->
-          <div id="u162" class="ax_default" data-label="vedio_area">
-            <div id="u162_state0" class="panel_state" data-label="State1" style="">
-              <div id="u162_state0_content" class="panel_state_content">
-
-                <!-- Unnamed (Image) -->
-                <div id="u163" class="ax_default image">
-                  <img id="u163_img" class="img " src="images/index/u163.jpg" />
-                  <!-- Unnamed () -->
-                  <div id="u164" class="text" style="display:none; visibility: hidden">
-                    <p>
-                      <span></span>
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Unnamed (內聯框架) -->
-                <div id="u165" class="ax_default ax_default_hidden" style="display:none; visibility: hidden">
-                  <iframe id="u165_input" scrolling="no" frameborder="1" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Unnamed (矩形) -->
-          <div id="u166" class="ax_default _一級標題">
-            <div id="u166_div" class=""></div>
-            <!-- Unnamed () -->
-            <div id="u167" class="text">
-              <p>
-                <span>Live vedio</span>
-              </p>
             </div>
           </div>
         </div>

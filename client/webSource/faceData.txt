@@ -1,0 +1,4 @@
+Face:30
+Happy:9
+Percentage:30.00%
+Total_Happiness:5114
