@@ -439,13 +439,14 @@
                           modal.style.display = "block";
                           modalImg.src = "yeah.gif";
                         }
+                        numAnim.update(totalHappy);
 
 
                       }, 1000);
                       var str = "開心率"
                       document.write(str.fontsize(5).fontcolor("#fff"));
 
-                      var str2 = "開心能量"
+                      var str2 = "累計開心能量"
                       document.write("<br>");
                       document.write("<br>");
                       document.write(str2.fontsize(6).fontcolor("#fff"));
@@ -454,47 +455,14 @@
                     </script>
                     <div id="value" style="font-size:30px; color:red;">0</div>
 
+                    <script type="text/javascript" src="js/countUp.js"></script>
                     <script>
-
-
-                      function animateValue(id, start, end, duration) {
-                        var range = end - start;
-                        var current = start;
-                        var increment = end > start ? 1 : -1;
-                        var stepTime = Math.abs(Math.floor(duration / range));
-                        var obj = document.getElementById(id);
-                        var timer = setInterval(function () {
-                          current += increment;
-                          obj.innerHTML = current;
-                          if (current == end) {
-                            clearInterval(timer);
-                          }
-                        }, stepTime);
+                      var numAnim = new CountUp("value", 0, 0, 0, 0.5);
+                      if (!numAnim.error) {
+                        numAnim.start();
+                      } else {
+                        console.error(numAnim.error);
                       }
-                      var firstRun = 1;
-                      var oldTotalHappy = 0;
-
-                      var update = setInterval(function () {
-                        var test = readTextFile("faceData.txt");
-                        var res = test.split(" ");
-                        var res = res[0].split("\n");
-                        var totalHappy = res[3].split(':')[1];
-                        if (firstRun == 1) {
-                          animateValue("value", 0, totalHappy, 2000);
-                          firstRun = 0;
-                          oldTotalHappy = totalHappy;
-                        }else if( totalHappy == oldTotalHappy ){
-
-                        } else {
-                          animateValue("value", oldTotalHappy, totalHappy, 2000);
-                          oldTotalHappy = totalHappy;
-                        }
-
-                        // animateValue("value", 25, 999, 500);
-                      }, 1000);
-
-                      // animateValue("value", 25, 999, 500);
-
 
                       // Get the modal
                       var modal = document.getElementById('myModal');
@@ -509,8 +477,6 @@
                       span.onclick = function () {
                         modal.style.display = "none";
                       }
-                      // modal.style.display = "block";
-                      // modalImg.src = "img_fjords.gif";
                     </script>
 
 
