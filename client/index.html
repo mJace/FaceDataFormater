@@ -144,7 +144,7 @@
 
     <!-- sampe_base (動態面板) -->
     <div id="u0" class="ax_default" data-label="sampe_base">
-      <div id="u0_state0" class="panel_state" data-label="State1" style="">
+      <div id="u0_state0" class="panel_state" data-label="State1">
         <div id="u0_state0_content" class="panel_state_content">
 
           <!-- Unnamed (Image) -->
@@ -163,7 +163,7 @@
 
     <!-- Preloader (動態面板) -->
     <div id="u3" class="ax_default" data-label="Preloader">
-      <div id="u3_state0" class="panel_state" data-label="0" style="">
+      <div id="u3_state0" class="panel_state" data-label="0">
         <div id="u3_state0_content" class="panel_state_content">
 
           <!-- Preloader (Image) -->
@@ -347,7 +347,7 @@
 
     <!-- base_00 (動態面板) -->
     <div id="u28" class="ax_default" data-label="base_00">
-      <div id="u28_state0" class="panel_state" data-label="State1" style="">
+      <div id="u28_state0" class="panel_state" data-label="State1">
         <div id="u28_state0_content" class="panel_state_content">
 
           <!-- base_png (Image) -->
@@ -379,7 +379,7 @@
                     <!-- The Modal -->
                     <div id="myModal" class="modal">
                       <span class="close">&times;</span>
-                      <img class="modal-content" id="img01">
+                      <img class="modal-content" id="img01" align=right>
                       <div id="caption"></div>
                     </div>
                     <script>
@@ -416,7 +416,9 @@
                         // value: Math.round((happySum / face) * 100)
                       });
                       var max = 3;
+                      var counter
                       var flag = 0;
+                      var initTime = new Date();
 
 
                       var update = setInterval(function () {
@@ -434,13 +436,17 @@
                           // value: Math.round((happySum / face) * 100)
                           value: happyRate
                         });
-                        if (happyRate >= 90 && flag < max) {
+
+                        var currentTime = new Date();
+                        var diffSec = (currentTime - initTime) / 1000;
+
+
+                        if (happyRate >= 80 && flag < max && diffSec >= 10) {
                           flag = flag + 1;
                           modal.style.display = "block";
                           modalImg.src = "yeah.gif";
                         }
                         numAnim.update(totalHappy);
-
 
                       }, 1000);
                       var str = "開心率"
